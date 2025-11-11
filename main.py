@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from config import system_prompt
-from functions.get_files_info import schema_get_files_info
-from functions.get_file_content import schema_get_file_content
-from functions.write_file import schema_write_file
-from functions.run_python_file import schema_run_python_file
+from functions.get_files_info import get_files_info, schema_get_files_info
+from functions.get_file_content import get_file_content, schema_get_file_content
+from functions.write_file import write_file, schema_write_file
+from functions.run_python_file import run_python_file, schema_run_python_file
 
 def main():
     load_dotenv()
@@ -62,9 +62,63 @@ def generate_content(client, messages, verbose):
     calls = response.function_calls
     if calls:
         for fc in calls:
-            print(f"Calling function: {fc.name}({fc.args})")
+            #print(f"Calling function: {fc.name}({fc.args})")
+            function_call_result = call_function(fc, verbose)
+
+            try:
+                response = function_call_result.parts[0].function_response.response
+                if verbose:
+                    print(f"-> {response}")
+            except AttributeError:
+                raise Exception("Function call result does not contain expected response structure")
     else:
         print(response.text)
+
+def call_function(function_call_part, verbose=False):
+
+    function_name = function_call_part.name
+    function_args = function_call_part.args
+
+    copied_args = function_args.copy()
+    copied_args["working_directory"] = "./calculator"
+
+    func_dict = {
+        "get_file_content": get_file_content,
+        "get_files_info": get_files_info,
+        "run_python_file": run_python_file,
+        "write_file": write_file,
+    }
+
+    if verbose is True:
+        print(f"Calling function: {function_name}({copied_args})")
+    else:
+        print(f" - Calling function: {function_name}")
+
+
+    try:
+        my_function = func_dict[function_name]
+        function_result = my_function(**copied_args)
+
+        return types.Content(
+            role="tool",
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"result": function_result},
+                )
+            ],
+        )
+    
+    except KeyError:
+        return types.Content(
+            role="tool",
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"error": f"Unknown function: {function_name}"},
+                )
+            ],
+        )
 
 
 

@@ -9,12 +9,6 @@ from google.genai import types
 #! It does not have all the security and safety features that a production AI agent would have.  !#
 #! It is for learning purposes only.                                                             !#
 #!###############################################################################################!#
-#*############################################################################*#
-#* I have commented out the entirety of this code.                            *#
-#* Please heed the warning above that this was created for learning purposes. *#
-#* Remove comments at your own risk.                                          *#
-#*############################################################################*#
-"""
 def run_python_file(working_directory, file_path, args=[]):
     abs_working = os.path.abspath(working_directory)
     abs_target = os.path.abspath(os.path.join(abs_working, file_path))
@@ -65,4 +59,3 @@ schema_run_python_file = types.FunctionDeclaration(
         required=["file_path"]
     ),
 )
-"""
