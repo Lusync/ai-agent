@@ -9,6 +9,7 @@ from google.genai import types
 #! It does not have all the security and safety features that a production AI agent would have.  !#
 #! It is for learning purposes only.                                                             !#
 #!###############################################################################################!#
+
 def run_python_file(working_directory, file_path, args=[]):
     abs_working = os.path.abspath(working_directory)
     abs_target = os.path.abspath(os.path.join(abs_working, file_path))
@@ -43,19 +44,14 @@ schema_run_python_file = types.FunctionDeclaration(
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
-            "file_path": types.Schema(
-                type=types.Type.STRING,
-                description="The path that will be used to locate the file.",
-            ),
-            "optional_args": types.Schema(
+            "working_directory": types.Schema(type=types.Type.STRING, description="Base directory to run from."),
+            "file_path": types.Schema(type=types.Type.STRING, description="Relative path to the .py file."),
+            "args": types.Schema(
                 type=types.Type.ARRAY,
-                description="Execute Python files with optional arguments.",
-                items=types.Schema(
-                    type=types.Type.STRING,
-                    description="A single argument to be passed to the Python script."
-                ),
+                description="Arguments to pass to the Python script.",
+                items=types.Schema(type=types.Type.STRING),
             ),
         },
-        required=["file_path"]
+        required=["working_directory", "file_path"]
     ),
 )

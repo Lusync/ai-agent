@@ -1,4 +1,5 @@
 MAX_CHARS = 10000
+MAX_ITERATION = 20
 
 system_prompt="""
 You are a helpful AI coding agent.
