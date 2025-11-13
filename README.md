@@ -27,8 +27,8 @@ pip install -r requirements.txt
 
 Set your model provider key(s):
 export OPENAI_API_KEY=your_key_here
-# or whichever provider the code is configured for
-# (e.g., ANTHROPIC_API_KEY, GOOGLE_API_KEY)
+ or whichever provider the code is configured for
+ (e.g., ANTHROPIC_API_KEY, GOOGLE_API_KEY)
 
 Run the agent:
 python main.py
@@ -63,4 +63,5 @@ MIT — see [LICENSE](./LICENSE) for details.
 
 ## Acknowledgments
 Built by following the Boot.dev course on agentic coding assistants. Inspired by tools like Cursor/Zed Agentic Mode and Claude Code.
+
 
