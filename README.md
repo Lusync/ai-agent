@@ -1,5 +1,9 @@
 # Agentic Bug-Fixing Assistant (Toy Project)
 
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![Status](https://img.shields.io/badge/status-experimental-orange.svg)
+
 > Warning: This project can be configured to access your filesystem, run shell commands, and execute Python code via tools you provide. Use only in a controlled environment with non-sensitive data. Do not run on machines with secrets or production credentials. You are responsible for what it accesses.
 
 This repository contains a toy coding assistant built by following the Boot.dev course. It uses an LLM with callable tools to analyze, fix, and refactor code in a local repository. It is an educational prototype—not hardened or secure.
@@ -63,5 +67,6 @@ MIT — see [LICENSE](./LICENSE) for details.
 
 ## Acknowledgments
 Built by following the Boot.dev course on agentic coding assistants. Inspired by tools like Cursor/Zed Agentic Mode and Claude Code.
+
 
 
